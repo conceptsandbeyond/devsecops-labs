@@ -120,5 +120,54 @@ jobs:
           aws deploy create-deployment \
             --application-name CnBDevOpsApp \
             --deployment-group-name CnBDevOpsDG \
+            --ignore-application-stop-failures \
             --deployment-config-name CodeDeployDefault.AllAtOnce \
             --s3-location bucket=${{ env.S3Bucket }},bundleType=zip,key=${{ env.S3Folder }}/deploy_artifacts.zip
+  
+  zap_scan:
+    runs-on: ubuntu-latest
+    needs: [deployqa]
+    name: Scan the webapplication
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.3.0
+        with:
+          token: ${{ secrets.TOKEN }}
+#          docker_name: 'owasp/zap2docker-stable'
+          target: 'http://54.88.30.99:9006/'
+          rules_file_name: '.zap/rules.tsv'
+          cmd_options: '-a'
+          
+  
+  
+  deployprod:
+    runs-on: ubuntu-latest
+    environment: prod
+    needs: [zap_scan]
+    env:
+      Region: us-east-1
+      S3Folder: githubactionsdso
+    permissions:
+      id-token: write
+      contents: read
+      
+    steps:
+      - name: configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::667493128782:role/GItHubNewAssumeRole
+          aws-region: ${{ env.Region }}
+          
+          
+      - name: CodeDeploy to EC2
+        id: deploy
+        run: |
+          aws deploy create-deployment \
+            --application-name CnBDevOpsApp \
+            --deployment-group-name CnBDevOpsDG-Prod \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --ignore-application-stop-failures \
+            --s3-location bucket=octank-config-rules,bundleType=zip,key=${{ env.S3Folder }}/deploy_artifacts.zip

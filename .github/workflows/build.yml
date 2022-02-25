@@ -126,7 +126,7 @@ jobs:
   
   zap_scan:
     runs-on: ubuntu-latest
-    needs: [deployqa]
+    needs: [deploy_qa]
     name: Scan the webapplication
     steps:
       - name: Checkout

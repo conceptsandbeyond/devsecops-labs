@@ -25,12 +25,12 @@ jobs:
           cache: maven
 
       - name: Build with Maven Wrapper
-        run: ./mvnw clean -B package
+        run: ./mvnw verify
         
       - name: Create Artifacts
         run: |
           sudo apt-get install zip
-          zip deploy_artifacts.zip target/*.jar appspec.yml run.sh setup.sh stop.sh
+          zip deploy_artifacts.zip target/*.jar appspec.yml run.sh setup.sh stop.sh target/pom-dependency-check.xml
           
 
       - name: Upload Artifacts

@@ -135,7 +135,7 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.3.0
         with:
-          token: ${{ secrets.TOKEN }}
+          #token: ${{ secrets.TOKEN }}
 #          docker_name: 'owasp/zap2docker-stable'
           target: 'http://52.90.13.195:9090/'
           rules_file_name: '.zap/rules.tsv'

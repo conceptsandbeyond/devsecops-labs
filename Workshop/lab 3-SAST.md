@@ -4,7 +4,7 @@ Spend 5 mins reviewing Sonarcloud here - https://sonarcloud.io/features
 
 Add SAST in your pipeline.
 
-step 1 - Already done for this project
+step 1 - (Already done for this project)
     Create a GitHub Secret
     In your GitHub repository, go to Settings > Secrets and create a new secret with the following details:
     
@@ -12,7 +12,7 @@ step 1 - Already done for this project
     In the Value field, enter ***********
 
 
-Step 2 - Verify that this is done
+Step 2 - (Verify that this is done)
 
 Update your pom.xml file with the following properties:
     '''
@@ -23,7 +23,7 @@ Update your pom.xml file with the following properties:
     Create or update your .github/workflows/bui
     '''
 
-Step 3 - your task
+Step 3 - (your task)
 Create or update your .github/workflows/build.yml 
 Here is a base configuration to run a SonarCloud analysis on your master branch and Pull Requests. If you already have some GitHub Actions, you might want to just add some of these new steps to an existing one.
 
@@ -67,5 +67,5 @@ jobs:
         
 
 
-Spend 20 mins on above exercise, if you run into issues, please paste the build.yml file from the labs section by using following commands.
+Spend 20 mins on above exercise, if you run into issues, please copy the build.yml file from the labs section by using following commands.
 

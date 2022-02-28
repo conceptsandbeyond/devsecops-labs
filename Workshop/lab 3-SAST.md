@@ -1,4 +1,6 @@
-Add static scanning using Sonar Cube.
+# DevSecOps lab 3 - SAST - Static Application Security Testing #
+
+## Task - Add static scanning to your GitHub Actions Workflow using Sonar Cube.
 
 Spend 5 mins reviewing Sonarcloud here - https://sonarcloud.io/features 
 
@@ -69,3 +71,9 @@ jobs:
 
 Spend 20 mins on above exercise, if you run into issues, please copy the build.yml file from the labs section by using following commands.
 
+```
+cd /home/ec2-user/environment/devsecops-labs
+# to make sure you are at project root directory
+cp labs/lab3-SAST.yml .github/workflows/build.yml
+# Open your build.yml file and review contents of your files
+```

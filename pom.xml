@@ -12,7 +12,7 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.6.1</version>
   </parent>
-  <name>petclinic-devsecops</name>
+  <name>petclinic</name>
 
   <properties>
 

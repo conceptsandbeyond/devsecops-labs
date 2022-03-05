@@ -165,7 +165,7 @@
               <encoding>UTF-8</encoding>
               <sourceDirectories>${basedir}</sourceDirectories>
               <includes>**/*</includes>
-              <excludes>**/.git/**/*,**/.idea/**/*,**/target/**/,**/Workshop/**/,**/.flattened-pom.xml,**/*.class</excludes>
+              <excludes>**/.git/**/*,**/.idea/**/*,**/target/**/,**/Workshop/**/,**/labs/**/,**/.flattened-pom.xml,**/*.class</excludes>
             </configuration>
             <goals>
               <goal>check</goal>

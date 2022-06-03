@@ -5,7 +5,7 @@
 <p>
  DAST is a process of testing an application or software product in an operating state
 
-Zed Attack Proxy (ZAP) is a free, open-source dynamic testing tool being maintained under the umbrella of the Open Web Application Security Project (OWASP). ZAP is designed specifically for testing web applications and is both flexible and extensible.
+**Zed Attack Proxy (ZAP)** is a free, open-source dynamic testing tool being maintained under the umbrella of the Open Web Application Security Project (OWASP). ZAP is designed specifically for testing web applications and is both flexible and extensible.
 
 At its core, ZAP is what is known as a “man-in-the-middle proxy.” It stands between the tester’s browser and the web application so that it can intercept and inspect messages sent between browser and web application, modify the contents if needed, and then forward those packets on to the destination. It can be used as a stand-alone application, and as a daemon process.
 
@@ -88,16 +88,19 @@ Run the following command from Cloud9 Terminal
 
 
 <br><br>
-### Add DAST ###
+### Add DAST steps ###
 
 Go through the instructions here for adding DAST action
 
 https://github.com/marketplace/actions/owasp-zap-full-scan 
 
-You will need target, which is a running web app. Use your application URL.
+You will need target, which is a running web app.  
+Use your application URL from above step.
 
+> **Help?** Verify your DAST steps with pre-built actoins file. 
 
-refer your ZAP action commands with the pre-built commands under job zap_scan: at <i> labs/lab4.2-ZAP.yml </i>
+refer your ZAP action commands with the pre-built commands under job   
+zap_scan: at <i> labs/lab4.2-ZAP.yml </i>
 
 <br>
 you can also copy the pre-built files from labs location by running the following command. 

@@ -8,11 +8,11 @@ In this lab we will protect the deployment to prod by introducing a manual appro
 
 GitHub actions let you do that by way of adding Environment protection rule. 
 <br>
-spend 10 minutes researching how environement protection works - <br>
+Learn more about how environement protection works - <br>
 https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment
 
 <br>
-spend 5 minutes reviewing the steps to approve the workflow here - <br>
+Review the steps to approve the workflow here - <br>
 https://docs.github.com/en/actions/managing-workflow-runs/reviewing-deployments 
 
 <br><br>
@@ -24,7 +24,10 @@ This part of setting is already created for you.
 Add an empty job that just requires manual review. 
 
 
-refer to pre-built yml file from <i> labs/lab5-deployprod.yml </i> location by running the following command. 
+refer to pre-built yml file from <i> labs/lab5-deployprod.yml </i> 
+
+<br>
+you can also copy the pre-built files from labs location by running the following command. 
 
 ```
 cd /home/ec2-user/environment/devsecops-labs

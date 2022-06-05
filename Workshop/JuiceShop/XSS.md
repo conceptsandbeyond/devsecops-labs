@@ -1,18 +1,14 @@
 
-## Run Docker Image##
+## Find the hacking challanges ##
 
-**These commands need to be run in your cloud9 environment terminal**
+**These excercises need to be run on OWASP juice web page**
 
-Pull Docker Image  
-Run `docker pull bkimminich/juice-shop`
+Cross-Site Scripting (XSS) attacks are a type of injection, in which malicious scripts are injected into otherwise benign and trusted web sites. XSS attacks occur when an attacker uses a web application to send malicious code, generally in the form of a browser side script, to a different end user. Flaws that allow these attacks to succeed are quite widespread and occur anywhere a web application uses input from a user within the output it generates without validating or encoding it.
 
-Run Juice Shop application  
-Run `docker run --rm -p 3000:3000 bkimminich/juice-shop`
+An attacker can use XSS to send a malicious script to an unsuspecting user. The end user’s browser has no way to know that the script should not be trusted, and will execute the script. Because it thinks the script came from a trusted source, the malicious script can access any cookies, session tokens, or other sensitive information retained by the browser and used with that site. These scripts can even rewrite the content of the HTML page
 
-Open new Terminal Tab  
-Find IP of your host by running the following command  
-`curl http://169.254.169.254/latest/meta-data/public-ipv4 `  
+<br>
 
-Browse to http://<replace it with public ip>:3000 (on macOS and Windows browse to http://192.168.99.100:3000 if you are using docker-machine instead of the native docker installation)  
+* Access score board page at http://< your IP address>:3000/#/score-board
 
-Move to next steps.
+* Complete DOM XSS challange

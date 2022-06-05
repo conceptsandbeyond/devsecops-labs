@@ -4,11 +4,11 @@
 name: Java CI with Maven
 
 on:
-  workflow_dispatch: {}
-  # push:
-  #   branches: [ main, feature/* ]
-  # pull_request:
-  #   branches: [ main ]
+  # workflow_dispatch: {}
+  push:
+    branches: [ main, feature/* ]
+  pull_request:
+    branches: [ main ]
 
 
 jobs:

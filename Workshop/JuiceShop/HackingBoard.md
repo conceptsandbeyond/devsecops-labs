@@ -1,18 +1,19 @@
 
-## Run Docker Image##
+## Find the hacking challanges ##
 
-**These commands need to be run in your cloud9 environment terminal**
+**These excercises need to be run on OWASP juice web page**
 
-Pull Docker Image  
-Run `docker pull bkimminich/juice-shop`
+Your first challange is to discover the score-board.
 
-Run Juice Shop application  
-Run `docker run --rm -p 3000:3000 bkimminich/juice-shop`
 
-Open new Terminal Tab  
-Find IP of your host by running the following command  
-`curl http://169.254.169.254/latest/meta-data/public-ipv4 `  
+**Score Board**	-> Find the carefully hidden 'Score Board' page  
+<br>
+<br>
+You missed the link during the initial mapping of the application
+There is a URL that leads to the Score Board but it is not hyperlinked to
 
-Browse to http://<replace it with public ip>:3000 (on macOS and Windows browse to http://192.168.99.100:3000 if you are using docker-machine instead of the native docker installation)  
+Knowing it exists, you can simply guess what URL the Score Board might have.  
 
-Move to next steps.
+Alternatively, you can try to find a reference or clue within the parts of the application that are not usually visible in the browser  
+
+> Once you open the Score Board you will see rest of the challanges.

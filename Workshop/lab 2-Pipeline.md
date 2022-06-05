@@ -40,7 +40,7 @@ git push --set-upstream origin feature/Student<team Number>
 *you will be prompted for username- enter Student ``` your team number ```
 for password enter the Personal access token provided to you*
 
-* Login to GitHub and open url - <https://github.com/conceptsandbeyond/devopsfundamentals>
+* Login to GitHub and open url - <https://github.com/conceptsandbeyond/devsecops-labs>
 * Click on Actions tab
 
    ![](static/lab1-2.png)

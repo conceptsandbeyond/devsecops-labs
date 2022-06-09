@@ -2,9 +2,11 @@
 
 ## Task - Add static scanning to your GitHub Actions Workflow using Sonar Cube.
 
-Spend 5 mins reviewing Sonarcloud here - https://sonarcloud.io/features 
+Read about Sonarqube SAST offerings - https://www.sonarqube.org/features/security/  
 
-Add SAST in your pipeline.
+Review Sonarcloud features - https://sonarcloud.io/features  
+
+Steps to integrate Sonarcloud into your github actions for SAST.
 
 Step 1 - (Skip - Its already done for this project) <br>
     Create a GitHub Secret <br>

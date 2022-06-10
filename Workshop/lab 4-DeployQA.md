@@ -45,7 +45,7 @@ i.e.
 
 ### Change the artifacts location ###
 
-**Open your build.yml file and rename the S3Folder section to match with your number </p> Search for the line** `S3Folder: githubactions0` **and update it with your team number.**
+**Open your build.yml file and rename the S3Folder section to match with your number </p> Search for the line** `S3Folder: githubactionsdso` **and update it with your team number.**
 S3Folder: githubactions`<your team number>`</p>
 
 >e.g.</p>

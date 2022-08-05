@@ -137,7 +137,44 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 #          docker_name: 'owasp/zap2docker-stable'
-          target: 'http://18.204.19.75:9092/'
+          target: 'http://52.90.13.195:9090/'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
         
+
+  approve:
+    runs-on: ubuntu-latest
+    needs: [zap_scan]
+    #needs: [build]
+    environment: prod
+    steps:
+      - name: approved
+        run: echo "approved"
+
+  
+  deployprod:
+    runs-on: ubuntu-latest
+    needs: [approve]
+    env:
+      Region: us-east-1
+      S3Folder: githubactionsdso
+    permissions:
+      id-token: write
+      contents: read
+      
+    steps:
+      - name: configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::286144240398:role/AssumeRoleForGithubUsers
+          aws-region: ${{ env.Region }}         
+          
+      - name: CodeDeploy to EC2
+        id: deploy
+        run: |
+          aws deploy create-deployment \
+            --application-name CnBDevOpsApp \
+            --deployment-group-name CnBDevOpsDG-Prod \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --ignore-application-stop-failures \
+            --s3-location bucket=octank-config-rules,bundleType=zip,key=${{ env.S3Folder }}/deploy_artifacts.zip

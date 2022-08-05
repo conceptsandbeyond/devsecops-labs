@@ -42,6 +42,10 @@ refer your ZAP action commands with the pre-built commands under job
 zap_scan: at <i> labs/lab4.2-ZAP.yml </i>
 
 <br>
+ <br>
+ 
+ ## Need Help???? ##
+ 
 you can also copy the pre-built files from labs location by running the following command. 
 
 ```
@@ -49,8 +53,11 @@ cd /home/ec2-user/environment/devsecops-labs
 # to make sure you are at project root directory
 cp labs/lab4.2-ZAP.yml .github/workflows/build.yml
 ```
+<br>
+ <br>
 
-Run the following command to push the change. 
+
+After changing your actions file, you can run the following command to push the change. 
 
 ```
 git add .

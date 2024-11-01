@@ -12,125 +12,126 @@ on:
 
 
 jobs:
-  # build:
+  build:
 
-  #   runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - name: Set up JDK 11
-  #       uses: actions/setup-java@v2
-  #       with:
-  #         java-version: '11'
-  #         distribution: 'adopt'
-  #         cache: maven
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: maven
 
-  #     - name: Build with Maven Wrapper
-  #       run: ls
+      - name: Build with Maven Wrapper
+        run: ls
         
-  #     - name: Create Artifacts
-  #       run: |
-  #         ls -lrt target
-  #         sudo apt-get install zip
-  #         zip deploy_artifacts.zip target/*.jar appspec.yml run.sh setup.sh stop.sh target/dependency-check-report.html
+      - name: Create Artifacts
+        run: |
+          ls -lrt target
+          sudo apt-get install zip
+          zip deploy_artifacts.zip target/*.jar appspec.yml run.sh setup.sh stop.sh target/dependency-check-report.html
           
-  #     - name: Upload Artifacts
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: jar-file
-  #         path: deploy_artifacts.zip
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: jar-file
+          path: deploy_artifacts.zip
         
-  # analyze:
+  analyze:
      
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-  #     - name: Set up JDK 17
-  #       uses: actions/setup-java@v4
-  #       with:
-  #         java-version: 17
-  #         distribution: 'zulu' # Alternative distribution options are available.
-  #     - name: Cache SonarCloud packages
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: ~/.sonar/cache
-  #         key: ${{ runner.os }}-sonar
-  #         restore-keys: ${{ runner.os }}-sonar
-  #     - name: Cache Maven packages
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: ~/.m2
-  #         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-  #         restore-keys: ${{ runner.os }}-m2
-  #     - name: Build and analyze
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  #       run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=conceptsandbeyond-github_devsecops-labs
+    runs-on: ubuntu-latest
+    needs: [analyze]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'zulu' # Alternative distribution options are available.
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=conceptsandbeyond-github_devsecops-labs
   
-#   upload:
-#     runs-on: ubuntu-latest
-#     needs: [analyze]
-#     env:
-#       Region: us-east-1
-#       S3Bucket: cnbdevopsfundamentals
-#       S3Folder: githubactionsdso
-#     permissions:
-#       id-token: write
-#       contents: read
+  upload:
+    runs-on: ubuntu-latest
+    needs: [analyze]
+    env:
+      Region: us-east-1
+      S3Bucket: cnbdevopsfundamentals
+      S3Folder: githubactionsdso
+    permissions:
+      id-token: write
+      contents: read
       
-#     steps:
-#       - name: Download an artifact
-#         uses: actions/download-artifact@v2
-#         with:
-#           name: jar-file
+    steps:
+      - name: Download an artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: jar-file
 
-#       - name: configure AWS credentials
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           role-to-assume: arn:aws:iam::286144240398:role/AssumeRoleForGithubUsers
-#           aws-region: ${{ env.Region }}
+      - name: configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::286144240398:role/AssumeRoleForGithubUsers
+          aws-region: ${{ env.Region }}
           
-#       - name: deploy to S3
-#         run: |
-#           ls
-#           aws s3 cp *.zip s3://${{ env.S3Bucket }}/${{ env.S3Folder }}/
+      - name: deploy to S3
+        run: |
+          ls
+          aws s3 cp *.zip s3://${{ env.S3Bucket }}/${{ env.S3Folder }}/
         
-#   deploy_qa:
-#     runs-on: ubuntu-latest
-#     needs: [upload]
-#     env:
-#       Region: us-east-1
-#       S3Bucket: cnbdevopsfundamentals
-#       S3Folder: githubactionsdso
-#     permissions:
-#       id-token: write
-#       contents: read
+  deploy_qa:
+    runs-on: ubuntu-latest
+    needs: [upload]
+    env:
+      Region: us-east-1
+      S3Bucket: cnbdevopsfundamentals
+      S3Folder: githubactionsdso
+    permissions:
+      id-token: write
+      contents: read
       
-#     steps:
-#       - name: configure AWS credentials
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           role-to-assume: arn:aws:iam::286144240398:role/AssumeRoleForGithubUsers
-#           aws-region: ${{ env.Region }}
+    steps:
+      - name: configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::286144240398:role/AssumeRoleForGithubUsers
+          aws-region: ${{ env.Region }}
           
           
-#       - name: CodeDeploy to EC2
-#         id: deploy
-#         run: |
-#           aws deploy create-deployment \
-#             --application-name CnBDevOpsApp \
-#             --deployment-group-name CnBDevOpsDG \
-#             --ignore-application-stop-failures \
-#             --deployment-config-name CodeDeployDefault.AllAtOnce \
-#             --s3-location bucket=${{ env.S3Bucket }},bundleType=zip,key=${{ env.S3Folder }}/deploy_artifacts.zip
+      - name: CodeDeploy to EC2
+        id: deploy
+        run: |
+          aws deploy create-deployment \
+            --application-name CnBDevOpsApp \
+            --deployment-group-name CnBDevOpsDG \
+            --ignore-application-stop-failures \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --s3-location bucket=${{ env.S3Bucket }},bundleType=zip,key=${{ env.S3Folder }}/deploy_artifacts.zip
   
   zap_scan:
     runs-on: ubuntu-latest
-    # needs: [deploy_qa]
+    needs: [deploy_qa]
     name: Scan the webapplication
     steps:
       - name: Checkout
@@ -140,46 +141,46 @@ jobs:
         uses: zaproxy/action-full-scan@v0.11.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-#          docker_name: 'owasp/zap2docker-stable'
+          docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
           target: 'http://100.25.10.156:3000/#/'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
         
 
-#   approve:
-#     runs-on: ubuntu-latest
-#     # needs: [zap_scan]
-#     needs: [build]
-#     environment: prod
-#     steps:
-#       - name: approved
-#         run: echo "approved"
+  approve:
+    runs-on: ubuntu-latest
+    needs: [zap_scan]
+    needs: [build]
+    environment: prod
+    steps:
+      - name: approved
+        run: echo "approved"
 
   
-#   deployprod:
-#     runs-on: ubuntu-latest
-#     needs: [approve]
-#     environment: prod
-#     env:
-#       Region: us-east-1
-#       S3Folder: githubactionsdso
-#     permissions:
-#       id-token: write
-#       contents: read
+  deployprod:
+    runs-on: ubuntu-latest
+    needs: [approve]
+    environment: prod
+    env:
+      Region: us-east-1
+      S3Folder: githubactionsdso
+    permissions:
+      id-token: write
+      contents: read
       
-#     steps:
-#       - name: configure AWS credentials
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           role-to-assume: arn:aws:iam::286144240398:role/AssumeRoleForGithubUsers
-#           aws-region: ${{ env.Region }}         
+    steps:
+      - name: configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::286144240398:role/AssumeRoleForGithubUsers
+          aws-region: ${{ env.Region }}         
           
-#       - name: CodeDeploy to EC2
-#         id: deploy
-#         run: |
-#           aws deploy create-deployment \
-#             --application-name CnBDevOpsApp \
-#             --deployment-group-name CnBDevOpsDG-Prod \
-#             --deployment-config-name CodeDeployDefault.AllAtOnce \
-#             --ignore-application-stop-failures \
-#             --s3-location bucket=octank-config-rules,bundleType=zip,key=${{ env.S3Folder }}/deploy_artifacts.zip
+      - name: CodeDeploy to EC2
+        id: deploy
+        run: |
+          aws deploy create-deployment \
+            --application-name CnBDevOpsApp \
+            --deployment-group-name CnBDevOpsDG-Prod \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --ignore-application-stop-failures \
+            --s3-location bucket=octank-config-rules,bundleType=zip,key=${{ env.S3Folder }}/deploy_artifacts.zip

@@ -29,7 +29,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PetClinicApplication {
 
 	public static void main(String[] args) {
-		out.println("<h1>Welcome " + username + "</h1>");
+		out.println("<h1>Welcome</h1>");
 		SpringApplication.run(PetClinicApplication.class, args);
 	}
 

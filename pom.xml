@@ -30,8 +30,10 @@
     <nohttp-checkstyle.version>0.0.4.RELEASE</nohttp-checkstyle.version>
     <spring-format.version>0.0.27</spring-format.version>
     
-    <sonar.organization>conceptsandbeyond-git</sonar.organization>
+
+    <sonar.organization>conceptsandbeyond-github</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
 
   </properties>
 
